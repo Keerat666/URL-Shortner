@@ -26,6 +26,11 @@ To run the backend in your local, run the following commands:
     npm start
 ```
 
+In case of a local build, the UI would be available at 
+
+[Local UI Link](https://http://localhost:8000/ui)
+
+
 I have also used Chai to test the backend.There are 4 test cases which cover the majority of the functionality.
 
 ```
