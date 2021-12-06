@@ -1,7 +1,7 @@
 const validUrl = require('valid-url')
 const shortid = require('shortid')
 const Url = require('../models/url_model')
-const baseUrl = 'http:localhost:8000'
+const baseUrl = 'https://awu.herokuapp.com'
 
 
 module.exports = {
