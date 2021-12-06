@@ -30,15 +30,15 @@ The project is also deployed on Heroku via a basic CI/CD pipeline.
 
 The project can be accessed via the following link:
 
-```
+
 [Live Link](https://awu.herokuapp.com/ui)
-```
+
 
 I have also created a documentation for the API's which can be accessed via the following link:
 
-```
+
 [Documentation Link](https://documenter.getpostman.com/view/9600373/UVJigDfY)
 
-```
+
 
 
