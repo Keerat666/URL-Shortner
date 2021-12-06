@@ -9,7 +9,8 @@ var urlSchema = new Schema({
     shortUrl: {type: String, required: true},
     date:{type: String, default: Date.now()},
     hit_count : {type: Number, default: 0},
-    date_list : {type: [Date], default: []}
+    date_list : {type: [Date], default: []},
+    
 }, { collection: 'url_collection' });
 
 var Model = mongoose.model('link', urlSchema);

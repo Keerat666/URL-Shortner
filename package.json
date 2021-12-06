@@ -1,5 +1,5 @@
 {
-    "name": "URL Shortener",
+    "name": "URL_Shortener",
     "version": "1.0.0",
     "description": "Backend Repo for URL Shortener",
     "main": "app.js",

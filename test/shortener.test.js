@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 describe('URL Testing for POST Request', () => {
     it('URL Check 1 - Existing URL', (done) => {
         let body = {
-            longUrl: "https://in.search.yahoo.com/?fr2=usd"
+            longUrl: "https://github.com/Keerat666"
         }
         chai.request(app)
             .post('/shorten')
