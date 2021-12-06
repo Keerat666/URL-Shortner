@@ -34,7 +34,7 @@ In case of a local build, the UI would be available at
 I have also used Chai to test the backend.There are 4 test cases which cover the majority of the functionality.
 
 ```
-    npm test command will run all the test cases.
+    npm test
 ```
 
 ![alt text](https://raw.githubusercontent.com/Keerat666/URL-Shortner/master/images/result.PNG)
