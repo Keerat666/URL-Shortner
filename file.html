@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>URL Shortener</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body onload="getAll()">
+
+<div class="container">
+  <h2>URL Shortnener submission by Gurkeerat </h2>
+  <p>Shorten URL's and keep track of the number of hits on the shortened URL.</p>            
+
+  
+    <div class="form-group">
+      <label for="exampleInputEmail1">URL</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter link">
+      <small id="emailHelp" class="form-text text-muted">Enter a link that you want to shorten </small>
+    </div>
+    <button onclick="post()" type="submit" class="btn btn-primary">Shorten URL</button>
+
+
+  <h2>Existing Shortened Links</h2>
+
+
+  <table class="table">
+    <thead>
+      <tr id="table-body">
+        <th>S No.</th>
+        <th>Long URL</th>
+        <th>Shortened URL</th>
+        <th>Hit Count</th>
+        <th>Link Created On</th>
+
+      </tr>
+    </thead>
+    <tbody >
+ 
+    </tbody>
+  </table>
+</div>
+
+</body>
+
+<script>
+
+    function getAll()
+    {
+        fetch("http://localhost:8000/getAll").then(function(response) {
+            return response.json();
+          }).then(function(data) {
+            console.log(data);
+            var counter=data.length+1;
+            for( var x in data)
+            {
+                counter--;
+                var table = document.getElementsByTagName("table")[0];
+                var row = table.insertRow(1);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+
+                cell1.innerHTML = counter;
+                cell2.innerHTML = data[x].longUrl;
+                cell3.innerHTML = "<a onclick='refresh()' target='_blank' href='"+data[x].urlCode+"'>"+data[x].shortUrl+"</a>";
+                cell4.innerHTML = data[x].hit_count;
+                cell5.innerHTML = new Date(+data[x].date).toDateString() + "at " + new Date(+data[x].date).toLocaleTimeString();
+            }
+          }).catch(function() {
+            console.log("Error");
+          });
+    }
+
+    function refresh()
+    {
+        console.log("Refreshing");
+        var table = document.getElementsByTagName("table")[0];
+        var rowCount = table.rows.length;
+        for (var i = 1; i < rowCount; i++) {
+            table.deleteRow(1);
+        }
+        setTimeout("", 1000)
+        getAll();
+    }
+
+    function post()
+    {
+        var input_url = document.getElementsByTagName("input")[0].value;
+        const data = { longUrl: document.getElementsByTagName("input")[0].value };
+
+        fetch('http://localhost:8000/shorten', {
+          method: 'POST', 
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+          if(data.message === "Invalid longUrl")
+          {
+            alert("Invalid URL entered. Please enter a valid URL");
+            document.getElementsByTagName("input")[0].value=""
+          }
+          else if(data.message === "This url has already been shortened")
+          {
+            alert("This url has already been shortened ("+data.shortUrl+"). \n Please enter a new URL");
+            document.getElementsByTagName("input")[0].value=""
+          }
+          else if(data.message === "Url shortened successfully")
+          {
+            alert("URL has been shortened to "+data.result.shortUrl);
+            document.getElementsByTagName("input")[0].value=""
+
+            refresh()
+          }
+
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+
+</script>
+
+</html>
